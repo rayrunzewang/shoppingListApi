@@ -1,0 +1,16 @@
+node_modules/
+.env
+
+# 忽略所有的图片文件
+*.jpg
+*.jpeg
+*.png
+*.gif
+
+# 忽略所有的视频文件
+*.mp4
+*.avi
+
+# 忽略特定文件夹
+/media/
+/uploads/
