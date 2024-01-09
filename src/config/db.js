@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const winston = require('winston');
 
-mongoose.connect(process.env.DB_CONNECTION_SHOPPLIST_URL);
-const db = mongoose.connection;
 
 const logger = winston.createLogger({
   transports: [
@@ -10,10 +8,16 @@ const logger = winston.createLogger({
   ]
 });
 
-db.on('error', (err) => {
-  console.error('MongoDB connection error:', err);
-  // 这里可以添加处理连接错误的逻辑，例如终止应用程序或记录错误信息
-  logger.error(`MongoDB connection error: ${err.message}`); //这是一个日志
-});
+const connectDB = async () => {
+ try{
+  await mongoose.connect(process.env.DB_CONNECTION_SHOPPLIST_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });// 这里其实最好是一个异步操作
+  console.log("已成功连接到数据库");
+ } catch {
+  console.error("Error connecting to db:", error)
+ }
+}
 
-module.exports = db;
+module.exports = connectDB;
